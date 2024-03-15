@@ -1,27 +1,26 @@
 "use strict";
-function addTwoNumbers(a, b) {
-    return a + b;
-}
-function squareNumber(num) {
-    return num * num;
-}
-function joinTwoNubers(numOne, numTwo) {
-    return `${numOne}${numTwo}`;
-}
-// array of function of type Calculator
-let calcs = [];
-calcs.push(addTwoNumbers, squareNumber); //no error
-const shapeOne = {
-    name: 'square',
-    calcArea: (l) => {
-        return l * l;
+const user = {
+    id: 1,
+    format() {
+        return `the user has an id of  ${this.id}`;
     }
 };
-const shapeTwo = {
-    name: 'circle',
-    calcArea(radius) {
-        return (Math.PI * radius ^ 2);
+const bill = {
+    id: 2,
+    amount: 50,
+    server: 'mario',
+    format() {
+        return `bill with id ${this.id} has €${this.amount}`;
     }
 };
-shapeOne.calcArea(5);
-shapeTwo.calcArea(10);
+function printFormatted(val) {
+    console.log(val.format());
+}
+function printBill(bill) {
+    console.log('server:', bill.server);
+    console.log(bill.format());
+}
+printFormatted(user);
+printFormatted(bill);
+printBill(bill);
+// printBill(user) error because require amount and server
