@@ -1,28 +1,38 @@
 /* -------------------------------------------------------------------------- */
-/*                              Generic Interface                             */
+/*                               Generic classes                              */
 /* -------------------------------------------------------------------------- */
 
-interface Collection<T> {
-  data:  T[]
+class DataCollection<T> {
+  constructor(private data: T[]) {}
+
+  loadOne(): T {
+    const i = Math.floor(Math.random() * this.data.length)
+    return this.data[i]
+  }
+  loadAll(): T[] {
+    return this.data
+  }
+  add(val: T): T[] {
+    this.data.push(val)
+    return this.data
+  }
+}
+
+interface User {
   name: string
+  score: number
 }
 
-const collectionOne: Collection<string>= {
-  data: ['mario', 'luigi', 'peach'],
-  name: 'mario characters'
-}
+const users = new DataCollection<User>([
+  {name: 'mario', score: 100},
+  {name: 'peach', score: 150},
+  {name: 'wario', score: 20},
+  {name: 'yoshi', score: 90},
+])
 
-const collectionTwo: Collection<number>= {
-  data: [56, 120, 78, 32, 400],
-  name: 'winning lottery numbers'
-}
+users.add({name: "Luiji", score: 50}) 
 
-function randomCollectionItem<T>(c: Collection<T>): T {
-  const i = Math.floor(Math.random() * c.data.length)
-  return c.data[i]
-}
+const user = users.loadAll()
 
-const resultOne = randomCollectionItem<string>(collectionOne)
-// with the function declaration we are already infering the type of the argument so no need to add <number>
-const resultTwo = randomCollectionItem(collectionTwo)
-console.log(resultOne, resultTwo);
+console.log('load one ', users.loadOne());
+console.log('load all ', users.loadAll());

@@ -1,20 +1,30 @@
 "use strict";
 /* -------------------------------------------------------------------------- */
-/*                              Generic Interface                             */
+/*                               Generic classes                              */
 /* -------------------------------------------------------------------------- */
-const collectionOne = {
-    data: ['mario', 'luigi', 'peach'],
-    name: 'mario characters'
-};
-const collectionTwo = {
-    data: [56, 120, 78, 32, 400],
-    name: 'winning lottery numbers'
-};
-function randomCollectionItem(c) {
-    const i = Math.floor(Math.random() * c.data.length);
-    return c.data[i];
+class DataCollection {
+    constructor(data) {
+        this.data = data;
+    }
+    loadOne() {
+        const i = Math.floor(Math.random() * this.data.length);
+        return this.data[i];
+    }
+    loadAll() {
+        return this.data;
+    }
+    add(val) {
+        this.data.push(val);
+        return this.data;
+    }
 }
-const resultOne = randomCollectionItem(collectionOne);
-// with the function declaration we are already infering the type of the argument so no need to add <number>
-const resultTwo = randomCollectionItem(collectionTwo);
-console.log(resultOne, resultTwo);
+const users = new DataCollection([
+    { name: 'mario', score: 100 },
+    { name: 'peach', score: 150 },
+    { name: 'wario', score: 20 },
+    { name: 'yoshi', score: 90 },
+]);
+users.add({ name: "Luiji", score: 50 });
+const user = users.loadAll();
+console.log('load one ', users.loadOne());
+console.log('load all ', users.loadAll());
