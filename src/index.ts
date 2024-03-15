@@ -1,6 +1,8 @@
 /* -------------------------------------------------------------------------- */
 /*                             CSV Writer Project                             */
 /* -------------------------------------------------------------------------- */
+import  {appendFileSync} from 'fs'
+
 interface Payment {
   id: number
   amount: number
@@ -16,6 +18,13 @@ class CSVWriter {
   }
 
   private csv: string
+
+  // save the file
+  save(filename: string): void {
+    appendFileSync(filename, this.csv)
+    this.csv = '\n'
+    console.log("file saved to", filename);
+  }
 
   addRows(values: Payment[]): void {
     let rows = values.map(v => this.formatRow(v))
@@ -35,4 +44,6 @@ writer.addRows([
   {id: 2, amount: 5, to: "luigi", notes: "web dev"},
   {id: 3, amount: 35, to: "kristen", notes: "javascript"},
 ])
+
+writer.save('./data/payments.csv')
 
