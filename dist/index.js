@@ -1,10 +1,10 @@
 "use strict";
 class Pizza {
     constructor(title, price) {
-        this.base = 'classic';
-        this.toppings = [];
         this.title = title;
         this.price = price;
+        this.base = 'classic';
+        this.toppings = [];
     }
     addTopping(topping) {
         this.toppings.push(topping);
@@ -17,8 +17,11 @@ class Pizza {
     }
 }
 const pizza = new Pizza('mario special', 15);
-pizza.addTopping('mushrooms');
-pizza.addTopping('olives');
-pizza.removeTopping('olives');
-pizza.selectBase('garlic');
+const pizza2 = new Pizza('luigi special', 17);
+function addMushroomsToPizzas(pizzas) {
+    pizzas.forEach((pizza) => {
+        pizza.addTopping('mushrooms');
+    });
+}
+addMushroomsToPizzas([pizza, pizza2]);
 console.log(pizza);

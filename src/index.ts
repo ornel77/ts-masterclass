@@ -3,11 +3,8 @@ type Base = 'classic' | 'thick' | 'thin' | 'garlic';
 
 class Pizza {
   constructor(private title: string,private price: number) {
-    // this.title = title;
-    // this.price = price
+    
   }
-//   private title: string;
-//   private price: number;
   private base: Base = 'classic'
   private toppings: string[] = []
 
@@ -24,12 +21,16 @@ class Pizza {
   }
 }
 
-const pizza = new Pizza('mario special', 15);
-pizza.addTopping('mushrooms')
-pizza.addTopping('olives')
-pizza.removeTopping('olives')
-pizza.selectBase('garlic')
+const pizza: Pizza = new Pizza('mario special', 15);
+const pizza2 = new Pizza('luigi special', 17);
+
+function addMushroomsToPizzas(pizzas: Pizza[]): void {
+  pizzas.forEach((pizza: Pizza) => {
+    pizza.addTopping('mushrooms')
+  })
+}
+
+addMushroomsToPizzas([pizza, pizza2])
+
 
 console.log(pizza);
-
-
