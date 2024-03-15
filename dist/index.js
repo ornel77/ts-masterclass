@@ -1,20 +1,27 @@
 "use strict";
-const something = { quantity: 50 };
-function printQuantity(item) {
-    console.log(`the quantity is: ${item.quantity}`);
+function addTwoNumbers(a, b) {
+    return a + b;
 }
-const fruit = {
-    name: 'mango',
-    quantity: 50
+function squareNumber(num) {
+    return num * num;
+}
+function joinTwoNubers(numOne, numTwo) {
+    return `${numOne}${numTwo}`;
+}
+// array of function of type Calculator
+let calcs = [];
+calcs.push(addTwoNumbers, squareNumber); //no error
+const shapeOne = {
+    name: 'square',
+    calcArea: (l) => {
+        return l * l;
+    }
 };
-const vehicle = {
-    type: 'car',
-    quantity: 3
+const shapeTwo = {
+    name: 'circle',
+    calcArea(radius) {
+        return (Math.PI * radius ^ 2);
+    }
 };
-const person = {
-    name: 'mario',
-    age: 30
-};
-printQuantity(vehicle);
-printQuantity(person);
-printQuantity({ quantity: 60, title: "hp" });
+shapeOne.calcArea(5);
+shapeTwo.calcArea(10);

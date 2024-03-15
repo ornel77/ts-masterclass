@@ -1,28 +1,42 @@
-/* --------------------------- Reusable interfaces -------------------------- */
-interface hasQuantity {
-    quantity: number
+/* -------------------------- function signaturees -------------------------- */
+type Calculator = (numOne: number, numTwo: number) => number
+
+function addTwoNumbers(a: number, b: number) {
+    return a + b
 }
 
-const something: hasQuantity = {quantity: 50}
-
-function printQuantity(item: hasQuantity) : void {
-    console.log(`the quantity is: ${item.quantity}`)
+function squareNumber(num:number) {
+    return num * num
 }
 
-const fruit = {
-    name: 'mango',
-    quantity: 50
+function joinTwoNubers(numOne:number, numTwo: number) {
+    return `${numOne}${numTwo}`
 }
-const vehicle = {
-    type: 'car',
-    quantity: 3
-}
-const person = {
-    name: 'mario',
-    age: 30
+// array of function of type Calculator
+let calcs: Calculator[] = []
+
+calcs.push(addTwoNumbers, squareNumber) //no error
+// calcs.push(joinTwoNubers) error
+
+/* -------------------- function signaturees on interface ------------------- */
+interface HasArea {
+    name: string
+    calcArea (a: number): number
 }
 
-printQuantity(vehicle)
-printQuantity(person)
+const shapeOne: HasArea = {
+    name: 'square',
+    calcArea: (l: number) => {
+        return l * l
+    } 
+}
+const shapeTwo: HasArea = {
+    name: 'circle',
+    calcArea (radius: number) {
+        return (Math.PI * radius^2)
+    } 
+}
 
-printQuantity({ quantity: 60, title: "hp" })
+shapeOne.calcArea(5)
+shapeTwo.calcArea(10)
+
