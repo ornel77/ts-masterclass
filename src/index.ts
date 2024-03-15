@@ -1,9 +1,19 @@
 /* -------------------------------- Class 101 ------------------------------- */
 type Base = 'classic' | 'thick' | 'thin' | 'garlic';
 
-class Pizza {
+// inheretance
+class MenuItem {
   constructor(private title: string,private price: number) {
     
+  }
+  get details(): string {
+    return `${this.title} - £${this.price}`
+  }
+}
+
+class Pizza extends MenuItem{
+  constructor(title: string,price: number) {
+    super(title, price)
   }
   private base: Base = 'classic'
   private toppings: string[] = []
@@ -31,6 +41,8 @@ function addMushroomsToPizzas(pizzas: Pizza[]): void {
 }
 
 addMushroomsToPizzas([pizza, pizza2])
+function printMenuItem(item: MenuItem): void {
+  console.log(item.details);
+}
 
-
-console.log(pizza);
+printMenuItem(pizza)

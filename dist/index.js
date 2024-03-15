@@ -1,8 +1,17 @@
 "use strict";
-class Pizza {
+// inheretance
+class MenuItem {
     constructor(title, price) {
         this.title = title;
         this.price = price;
+    }
+    get details() {
+        return `${this.title} - £${this.price}`;
+    }
+}
+class Pizza extends MenuItem {
+    constructor(title, price) {
+        super(title, price);
         this.base = 'classic';
         this.toppings = [];
     }
@@ -24,4 +33,7 @@ function addMushroomsToPizzas(pizzas) {
     });
 }
 addMushroomsToPizzas([pizza, pizza2]);
-console.log(pizza);
+function printMenuItem(item) {
+    console.log(item.details);
+}
+printMenuItem(pizza);
