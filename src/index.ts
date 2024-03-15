@@ -1,80 +1,38 @@
-/* -------------------------------- Class 101 ------------------------------- */
-type Base = 'classic' | 'thick' | 'thin' | 'garlic';
-
-interface HasFormatter {
-  format(): string;
+/* -------------------------------------------------------------------------- */
+/*                             CSV Writer Project                             */
+/* -------------------------------------------------------------------------- */
+interface Payment {
+  id: number
+  amount: number
+  to: string
+  notes: string
 }
 
-// inheretance
-abstract class MenuItem implements HasFormatter {
-  constructor(private title: string, private price: number) {}
-  get details(): string {
-    return `${this.title} - £${this.price}`;
+type PaymentColumns = ('id' | 'amount' | 'to' | 'notes')[]
+
+class CSVWriter {
+  constructor(private columns: PaymentColumns) {
+    this.csv = this.columns.join(',') + '\n'
   }
 
-  abstract format(): string {
-    return `this menu item is called ${this.title} and is £${this.price}`;
-  }
-}
+  private csv: string
 
-class Pizza extends MenuItem {
-  constructor(title: string, price: number) {
-    super(title, price);
-  }
-  private base: Base = 'classic';
-  private toppings: string[] = [];
-
-  addTopping(topping: string): void {
-    this.toppings.push(topping);
+  addRows(values: Payment[]): void {
+    let rows = values.map(v => this.formatRow(v))
+    this.csv += rows.join('\n')
+    console.log(this.csv);
   }
 
-  removeTopping(topping: string): void {
-    this.toppings = this.toppings.filter((t) => t !== topping);
-  }
-
-  selectBase(b: Base): void {
-    this.base = b;
-  }
-
-  format(): string {
-    let formatted = this.details + '\n';
-
-    // base
-    formatted += `Pizza on a ${this.base} base`;
-
-    // toppings
-    if (this.toppings.length < 1) {
-      formatted += 'with no toppings';
-    } else {
-      formatted += ` with ${this.toppings.join(', ')}`;
-    }
-
-    return formatted;
+  private formatRow(p: Payment): string {
+    return this.columns.map(col => p[col]).join(',') 
   }
 }
 
-const pizza: Pizza = new Pizza('mario special', 15);
-const pizza2 = new Pizza('luigi special', 17);
+const writer = new CSVWriter(['id', 'amount', 'to', 'notes'])
 
-function addMushroomsToPizzas(pizzas: Pizza[]): void {
-  pizzas.forEach((pizza: Pizza) => {
-    pizza.addTopping('mushrooms')
-  })
-}
+writer.addRows([
+  {id: 1, amount: 50, to: "mario", notes: "nothing yet"},
+  {id: 2, amount: 5, to: "luigi", notes: "web dev"},
+  {id: 3, amount: 35, to: "kristen", notes: "javascript"},
+])
 
-addMushroomsToPizzas([pizza, pizza2])
-// function printMenuItem(item: MenuItem): void {
-//   console.log(item.details);
-// }
-
-// printMenuItem(pizza)
-
-pizza.addTopping('olives')
-pizza.addTopping('jam')
-pizza.addTopping('burrata')
-
-function printFormatted(val: HasFormatter): void {
-  console.log(val.format());
-}
-
-printFormatted(pizza);

@@ -1,62 +1,21 @@
 "use strict";
-// inheretance
-class MenuItem {
-    constructor(title, price) {
-        this.title = title;
-        this.price = price;
+class CSVWriter {
+    constructor(columns) {
+        this.columns = columns;
+        this.csv = this.columns.join(',') + '\n';
     }
-    get details() {
-        return `${this.title} - £${this.price}`;
+    addRows(values) {
+        let rows = values.map(v => this.formatRow(v));
+        this.csv += rows.join('\n');
+        console.log(this.csv);
     }
-    format() {
-        return `this menu item is called ${this.title} and is £${this.price}`;
-    }
-}
-class Pizza extends MenuItem {
-    constructor(title, price) {
-        super(title, price);
-        this.base = 'classic';
-        this.toppings = [];
-    }
-    addTopping(topping) {
-        this.toppings.push(topping);
-    }
-    removeTopping(topping) {
-        this.toppings = this.toppings.filter((t) => t !== topping);
-    }
-    selectBase(b) {
-        this.base = b;
-    }
-    format() {
-        let formatted = this.details + '\n';
-        // base
-        formatted += `Pizza on a ${this.base} base`;
-        // toppings
-        if (this.toppings.length < 1) {
-            formatted += 'with no toppings';
-        }
-        else {
-            formatted += ` with ${this.toppings.join(', ')}`;
-        }
-        return formatted;
+    formatRow(p) {
+        return this.columns.map(col => p[col]).join(',');
     }
 }
-const pizza = new Pizza('mario special', 15);
-const pizza2 = new Pizza('luigi special', 17);
-function addMushroomsToPizzas(pizzas) {
-    pizzas.forEach((pizza) => {
-        pizza.addTopping('mushrooms');
-    });
-}
-addMushroomsToPizzas([pizza, pizza2]);
-// function printMenuItem(item: MenuItem): void {
-//   console.log(item.details);
-// }
-// printMenuItem(pizza)
-pizza.addTopping('olives');
-pizza.addTopping('jam');
-pizza.addTopping('burrata');
-function printFormatted(val) {
-    console.log(val.format());
-}
-printFormatted(pizza);
+const writer = new CSVWriter(['id', 'amount', 'to', 'notes']);
+writer.addRows([
+    { id: 1, amount: 50, to: "mario", notes: "nothing yet" },
+    { id: 2, amount: 5, to: "luigi", notes: "web dev" },
+    { id: 3, amount: 35, to: "kristen", notes: "javascript" },
+]);
