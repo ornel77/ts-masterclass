@@ -1,26 +1,24 @@
 "use strict";
-const user = {
-    id: 1,
-    format() {
-        return `the user has an id of  ${this.id}`;
+class Pizza {
+    constructor(title, price) {
+        this.base = 'classic';
+        this.toppings = [];
+        this.title = title;
+        this.price = price;
     }
-};
-const bill = {
-    id: 2,
-    amount: 50,
-    server: 'mario',
-    format() {
-        return `bill with id ${this.id} has €${this.amount}`;
+    addTopping(topping) {
+        this.toppings.push(topping);
     }
-};
-function printFormatted(val) {
-    console.log(val.format());
+    removeTopping(topping) {
+        this.toppings = this.toppings.filter(t => t !== topping);
+    }
+    selectBase(b) {
+        this.base = b;
+    }
 }
-function printBill(bill) {
-    console.log('server:', bill.server);
-    console.log(bill.format());
-}
-printFormatted(user);
-printFormatted(bill);
-printBill(bill);
-// printBill(user) error because require amount and server
+const pizza = new Pizza('mario special', 15);
+pizza.addTopping('mushrooms');
+pizza.addTopping('olives');
+pizza.removeTopping('olives');
+pizza.selectBase('garlic');
+console.log(pizza);
