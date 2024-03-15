@@ -8,6 +8,9 @@ class MenuItem {
     get details() {
         return `${this.title} - £${this.price}`;
     }
+    format() {
+        return `this menu item is called ${this.title} and is £${this.price}`;
+    }
 }
 class Pizza extends MenuItem {
     constructor(title, price) {
@@ -27,13 +30,17 @@ class Pizza extends MenuItem {
 }
 const pizza = new Pizza('mario special', 15);
 const pizza2 = new Pizza('luigi special', 17);
-function addMushroomsToPizzas(pizzas) {
-    pizzas.forEach((pizza) => {
-        pizza.addTopping('mushrooms');
-    });
+// function addMushroomsToPizzas(pizzas: Pizza[]): void {
+//   pizzas.forEach((pizza: Pizza) => {
+//     pizza.addTopping('mushrooms')
+//   })
+// }
+// addMushroomsToPizzas([pizza, pizza2])
+// function printMenuItem(item: MenuItem): void {
+//   console.log(item.details);
+// }
+// printMenuItem(pizza)
+function printFormatted(val) {
+    console.log(val.format());
 }
-addMushroomsToPizzas([pizza, pizza2]);
-function printMenuItem(item) {
-    console.log(item.details);
-}
-printMenuItem(pizza);
+printFormatted(pizza);

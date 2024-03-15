@@ -1,13 +1,21 @@
 /* -------------------------------- Class 101 ------------------------------- */
 type Base = 'classic' | 'thick' | 'thin' | 'garlic';
 
+interface HasFormatter {
+  format(): string
+}
+
 // inheretance
-class MenuItem {
+class MenuItem implements HasFormatter {
   constructor(private title: string,private price: number) {
     
   }
   get details(): string {
     return `${this.title} - £${this.price}`
+  }
+
+  format(): string {
+    return `this menu item is called ${this.title} and is £${this.price}`
   }
 }
 
@@ -34,15 +42,21 @@ class Pizza extends MenuItem{
 const pizza: Pizza = new Pizza('mario special', 15);
 const pizza2 = new Pizza('luigi special', 17);
 
-function addMushroomsToPizzas(pizzas: Pizza[]): void {
-  pizzas.forEach((pizza: Pizza) => {
-    pizza.addTopping('mushrooms')
-  })
+// function addMushroomsToPizzas(pizzas: Pizza[]): void {
+//   pizzas.forEach((pizza: Pizza) => {
+//     pizza.addTopping('mushrooms')
+//   })
+// }
+
+// addMushroomsToPizzas([pizza, pizza2])
+// function printMenuItem(item: MenuItem): void {
+//   console.log(item.details);
+// }
+
+// printMenuItem(pizza)
+
+function printFormatted(val: HasFormatter): void {
+  console.log(val.format());
 }
 
-addMushroomsToPizzas([pizza, pizza2])
-function printMenuItem(item: MenuItem): void {
-  console.log(item.details);
-}
-
-printMenuItem(pizza)
+printFormatted(pizza)
