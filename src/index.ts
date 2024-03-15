@@ -1,41 +1,30 @@
-/* -------------------------- extending interfaces -------------------------- */
-interface HasFormatter {
-    format(): string
-}
-
-interface Bill extends HasFormatter {
+/* ---------------------------- extend type alias --------------------------- */
+type Person = {
     id: string | number
-    amount: number
-    server: string
+    firstName: string
 }
 
-const user = {
-    id: 1,
-    format(): string {
-        return `the user has an id of  ${this.id}`
-    }
+type User = Person & {
+    email: string
 }
 
-const bill = {
-    id: 2,
-    amount: 50,
-    server: 'mario',
-    format(): string {
-        return `bill with id ${this.id} has €${this.amount}`
-    }
+
+const person1 = {
+    id:1,
+    firstName: 'mario'
 }
 
-function printFormatted(val: HasFormatter): void {
-    console.log(val.format());
+const person2 = {
+    id:1,
+    firstName: 'yoshi',
+    email: 'd.e@f.com'
+}
+const person3 = {
+    email: 'ddsfsdf.e@f.com'
 }
 
-function printBill(bill: Bill): void {
-    console.log('server:', bill.server);
-    console.log(bill.format());
+function printUser(user: User) {
+    console.log(user.id, user.email, user.firstName);
 }
 
-printFormatted(user)
-printFormatted(bill)
-
-printBill(bill)
-// printBill(user) error because require amount and server
+// printUser(person1) error
