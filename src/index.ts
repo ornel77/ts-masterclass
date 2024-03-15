@@ -1,49 +1,50 @@
 /* -------------------------------------------------------------------------- */
-/*                             CSV Writer Project                             */
+/*                                Generics 101                                */
+
+import { getRandomValues } from "crypto";
+
 /* -------------------------------------------------------------------------- */
-import  {appendFileSync} from 'fs'
-
-interface Payment {
-  id: number
-  amount: number
-  to: string
-  notes: string
+function logAndReturnString(val: string): string {
+  console.log(val);
+  return val;
+}
+function logAndReturnNumber(val: number): number {
+  console.log(val);
+  return val;
+}
+function logAndReturnBoolean(val: boolean): boolean {
+  console.log(val);
+  return val;
 }
 
-type PaymentColumns = ('id' | 'amount' | 'to' | 'notes')[]
-
-class CSVWriter {
-  constructor(private columns: PaymentColumns) {
-    this.csv = this.columns.join(',') + '\n'
-  }
-
-  private csv: string
-
-  // save the file
-  save(filename: string): void {
-    appendFileSync(filename, this.csv)
-    this.csv = '\n'
-    console.log("file saved to", filename);
-  }
-
-  addRows(values: Payment[]): void {
-    let rows = values.map(v => this.formatRow(v))
-    this.csv += rows.join('\n')
-    console.log(this.csv);
-  }
-
-  private formatRow(p: Payment): string {
-    return this.columns.map(col => p[col]).join(',') 
-  }
+// annoying to do 3 function that does the same type so we use generics : 
+// Example 1
+function logAndReturnValue<T>(val: T): T {
+  console.log(val);
+  return val
 }
 
-const writer = new CSVWriter(['id', 'amount', 'to', 'notes'])
+const result = logAndReturnValue<string>('mario')
+const result1 = logAndReturnValue<number>(1)
+const result2 = logAndReturnValue<boolean>(false)
 
-writer.addRows([
-  {id: 1, amount: 50, to: "mario", notes: "nothing yet"},
-  {id: 2, amount: 5, to: "luigi", notes: "web dev"},
-  {id: 3, amount: 35, to: "kristen", notes: "javascript"},
-])
+// Example 2
+function getRandomArrayValue<T>(values: T[]): T {
+  const i = Math.floor(Math.random() * values.length)
+  return values[i]
+}
 
-writer.save('./data/payments.csv')
+interface User {
+  name: string,
+  score: number
+}
 
+const users: User[] = [
+  {name: 'mario', score: 100},
+  {name: 'peach', score: 150},
+  {name: 'wario', score: 20},
+  {name: 'yoshi', score: 90},
+]
+
+const randomUser = getRandomArrayValue<User>(users)
+console.log(randomUser);

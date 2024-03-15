@@ -1,33 +1,39 @@
 "use strict";
+/* -------------------------------------------------------------------------- */
+/*                                Generics 101                                */
 Object.defineProperty(exports, "__esModule", { value: true });
 /* -------------------------------------------------------------------------- */
-/*                             CSV Writer Project                             */
-/* -------------------------------------------------------------------------- */
-const fs_1 = require("fs");
-class CSVWriter {
-    constructor(columns) {
-        this.columns = columns;
-        this.csv = this.columns.join(',') + '\n';
-    }
-    // save the file
-    save(filename) {
-        (0, fs_1.appendFileSync)(filename, this.csv);
-        this.csv = '\n';
-        console.log("file saved to", filename);
-    }
-    addRows(values) {
-        let rows = values.map(v => this.formatRow(v));
-        this.csv += rows.join('\n');
-        console.log(this.csv);
-    }
-    formatRow(p) {
-        return this.columns.map(col => p[col]).join(',');
-    }
+function logAndReturnString(val) {
+    console.log(val);
+    return val;
 }
-const writer = new CSVWriter(['id', 'amount', 'to', 'notes']);
-writer.addRows([
-    { id: 1, amount: 50, to: "mario", notes: "nothing yet" },
-    { id: 2, amount: 5, to: "luigi", notes: "web dev" },
-    { id: 3, amount: 35, to: "kristen", notes: "javascript" },
-]);
-writer.save('./data/payments.csv');
+function logAndReturnNumber(val) {
+    console.log(val);
+    return val;
+}
+function logAndReturnBoolean(val) {
+    console.log(val);
+    return val;
+}
+// annoying to do 3 function that does the same type so we use generics : 
+// Example 1
+function logAndReturnValue(val) {
+    console.log(val);
+    return val;
+}
+const result = logAndReturnValue('mario');
+const result1 = logAndReturnValue(1);
+const result2 = logAndReturnValue(false);
+// Example 2
+function getRandomArrayValue(values) {
+    const i = Math.floor(Math.random() * values.length);
+    return values[i];
+}
+const users = [
+    { name: 'mario', score: 100 },
+    { name: 'peach', score: 150 },
+    { name: 'wario', score: 20 },
+    { name: 'yoshi', score: 90 },
+];
+const randomUser = getRandomArrayValue(users);
+console.log(randomUser);
